@@ -1,6 +1,4 @@
-# ════════════════════════════════════════════════════════════════
 # TEST: EMBEDDINGS GENERATOR
-# ════════════════════════════════════════════════════════════════
 
 """
 Тестирование создания embeddings для текстовых данных.
@@ -20,7 +18,7 @@ logging.basicConfig(
 def test_embeddings():
     """Test creating embeddings for the dataset."""
 
-    print("🧪 TEST: EMBEDDINGS GENERATOR")
+    print(" TEST: EMBEDDINGS GENERATOR")
 
     # Load data
     loader = GeorgianAttractionsDataLoader(Config.DATASET_NAME)
