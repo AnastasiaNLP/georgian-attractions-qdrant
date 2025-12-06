@@ -1,6 +1,4 @@
-# ════════════════════════════════════════════════════════════════
 # TEST: QDRANT SEARCH
-# ════════════════════════════════════════════════════════════════
 
 """
 Тестирование поиска в Qdrant базе.
@@ -13,26 +11,26 @@ import torch
 
 print(" TEST: QDRANT SEARCH")
 
-# 1. Подключение к Qdrant
+
 print("\n1Connecting to Qdrant...")
 client = QdrantClient(
     url=Config.QDRANT_URL,
     api_key=Config.QDRANT_API_KEY
 )
 
-# Проверяем коллекцию
+
 collection_info = client.get_collection(Config.COLLECTION_NAME)
 print(f" Connected!")
 print(f"   Collection: {Config.COLLECTION_NAME}")
 print(f"   Points: {collection_info.points_count}")
 
-# 2. Загружаем embedding модель
+
 print("\n Loading embedding model...")
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 embedder = SentenceTransformer(Config.EMBEDDING_MODEL, device=device)
 print(f" Model loaded on {device}")
 
-# 3. Тестовые запросы
+
 test_queries = [
     "пляжи в Батуми",
     "ancient churches in Georgia",
@@ -48,7 +46,7 @@ for query in test_queries:
     # Создаём embedding запроса
     query_vector = embedder.encode(query).tolist()
 
-    # Поиск в Qdrant
+    
     results = client.search(
         collection_name=Config.COLLECTION_NAME,
         query_vector=query_vector,
@@ -56,7 +54,7 @@ for query in test_queries:
         with_payload=True
     )
 
-    # Показываем результаты
+
     for i, result in enumerate(results, 1):
         print(f"\n{i}. {result.payload['name']}")
         print(f"   Score: {result.score:.4f}")
@@ -68,7 +66,7 @@ for query in test_queries:
 
 print(" SEARCH TEST COMPLETED!")
 
-# 4. Статистика по категориям
+
 print("\n Scrolling through all records for statistics...")
 
 from collections import Counter
@@ -77,7 +75,7 @@ categories = []
 languages = []
 with_images = 0
 
-# Получаем все записи
+
 scroll_result = client.scroll(
     collection_name=Config.COLLECTION_NAME,
     limit=10000,
