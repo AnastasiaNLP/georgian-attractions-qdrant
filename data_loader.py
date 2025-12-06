@@ -1,4 +1,4 @@
-# DATA LOADER (UPDATED - TEXT ONLY)
+# DATA LOADER 
 """
 Georgian Attractions Data Loader
 Loads the dataset from HuggingFace and normalizes fields.
