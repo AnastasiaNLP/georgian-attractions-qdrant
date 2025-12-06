@@ -1,6 +1,4 @@
-# ════════════════════════════════════════════════════════════════
 # QDRANT UPLOADER
-# ════════════════════════════════════════════════════════════════
 
 """
 Uploads processed data to Qdrant Cloud.
@@ -39,7 +37,7 @@ class QdrantUploader:
 
         self.client = QdrantClient(url=url, api_key=api_key, timeout=60)
 
-        print(f"✅ Connected to Qdrant!")
+        print(f" Connected to Qdrant!")
         print(f"   URL: {url[:50]}...")
 
     def create_collection(self, recreate: bool = False):
@@ -60,7 +58,7 @@ class QdrantUploader:
                 return
 
         # Create collection
-        print(f"⏳ Creating collection '{self.collection_name}'...")
+        print(f" Creating collection '{self.collection_name}'...")
 
         self.client.create_collection(
             collection_name=self.collection_name,
