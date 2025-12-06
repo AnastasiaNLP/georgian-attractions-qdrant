@@ -1,7 +1,4 @@
-# ════════════════════════════════════════════════════════════════
 # DATA LOADER (UPDATED - TEXT ONLY)
-# ════════════════════════════════════════════════════════════════
-
 """
 Georgian Attractions Data Loader
 Loads the dataset from HuggingFace and normalizes fields.
