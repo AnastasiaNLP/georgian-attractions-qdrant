@@ -1,7 +1,7 @@
-# TEST: QDRANT SEARCH
+# TEST: Qdrant search 
 
 """
-Тестирование поиска в Qdrant базе.
+Testing the search in the Qdrant database
 """
 
 from qdrant_client import QdrantClient
@@ -9,7 +9,7 @@ from sentence_transformers import SentenceTransformer
 from config import Config
 import torch
 
-print(" TEST: QDRANT SEARCH")
+print(" Test: Qdrant search")
 
 
 print("\n1Connecting to Qdrant...")
@@ -20,7 +20,7 @@ client = QdrantClient(
 
 
 collection_info = client.get_collection(Config.COLLECTION_NAME)
-print(f" Connected!")
+print(f" Connected")
 print(f"   Collection: {Config.COLLECTION_NAME}")
 print(f"   Points: {collection_info.points_count}")
 
@@ -43,14 +43,14 @@ print("\n Testing search...")
 
 for query in test_queries:
     print(f"\n Query: '{query}'")
-    # Создаём embedding запроса
+    # create an embedding request
     query_vector = embedder.encode(query).tolist()
 
     
     results = client.search(
         collection_name=Config.COLLECTION_NAME,
         query_vector=query_vector,
-        limit=3,  # Топ-3 результата
+        limit=3,  
         with_payload=True
     )
 
@@ -64,7 +64,7 @@ for query in test_queries:
         print(f"   Has image: {result.payload['has_processed_image']}")
         print(f"   Description: {result.payload['description'][:150]}...")
 
-print(" SEARCH TEST COMPLETED!")
+print(" Search test completed!")
 
 
 print("\n Scrolling through all records for statistics...")
@@ -103,4 +103,4 @@ print(f"   - With images: {with_images}")
 print(f"   - Without images: {len(scroll_result[0]) - with_images}")
 
 
-print(" ALL TESTS PASSED!")
+print(" All tests passed!")
