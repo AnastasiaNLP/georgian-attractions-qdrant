@@ -1,14 +1,14 @@
-# TEST: DATA LOADER
+# TEST: data loader 
 """
-Тестирование загрузки датасета.
-Загружает 10 записей для проверки.
+Testing dataset loading.
+Loads 10 records for testing.
 """
 
 import logging
 from config import Config
 from data_loader import GeorgianAttractionsDataLoader
 
-# Setup logging
+# setup logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
@@ -16,15 +16,15 @@ logging.basicConfig(
 
 def test_data_loader():
     """Test loading a small sample of the dataset."""
-    print(" TEST: DATA LOADER")
-    # Create loader
+    print(" TEST: data loader")
+    # create loader
     loader = GeorgianAttractionsDataLoader(Config.DATASET_NAME)
 
-    # Load small sample
-    print("\n Loading sample (10 records)...")
+    # load small sample
+    print("\n Loading sample (10 records)")
     records = loader.load(sample_size=10)
 
-    # Display results
+    # display results
     print(f"\n Sample loaded: {len(records)} records")
 
     print("\ First record:")
@@ -41,7 +41,7 @@ def test_data_loader():
         else:
             print(f"   {key}: {value}")
 
-    # Statistics
+    # statistics
     print(f"\n Sample statistics:")
     with_images = sum(1 for r in records if r['has_processed_image'])
     print(f"   Records with images: {with_images}/{len(records)}")
@@ -52,7 +52,7 @@ def test_data_loader():
         languages[lang] = languages.get(lang, 0) + 1
     print(f"   Languages: {languages}")
 
-    print("\n TEST PASSED!")
+    print("\n Test passed!")
     return records
 
 
@@ -60,7 +60,7 @@ if __name__ == "__main__":
     try:
         records = test_data_loader()
 
-        # Ask to continue
+        # ask to continue
         print("\n" + "="*70)
         response = input("Continue with full dataset? (yes/no): ")
 
@@ -71,6 +71,6 @@ if __name__ == "__main__":
             print(f" Full dataset loaded: {len(all_records)} records")
 
     except Exception as e:
-        print(f"\n TEST FAILED: {e}")
+        print(f"\n Test failed: {e}")
         import traceback
         traceback.print_exc()
