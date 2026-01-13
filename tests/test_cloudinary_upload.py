@@ -7,12 +7,12 @@ import sys
 from config import Config
 from cloudinary_uploader import CloudinaryUploader
 
-# Fix encoding for terminal
+# fix encoding for terminal
 if sys.version_info[0] >= 3:
     import io
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
-# Setup logging
+# setup logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
@@ -21,11 +21,11 @@ logging.basicConfig(
 def test_cloudinary_upload():
     """Upload images to Cloudinary."""
 
-    print("TEST: CLOUDINARY IMAGE UPLOAD")
+    print("TEST: Cloudinary images upload")
 
-    # Check config
+    # check config
     if not Config.CLOUDINARY_CLOUD_NAME:
-        print("\nERROR: Cloudinary not configured!")
+        print("\nERROR: Cloudinary not configured")
         print("   Add to .env:")
         print("   CLOUDINARY_CLOUD_NAME=your_cloud_name")
         print("   CLOUDINARY_API_KEY=your_api_key")
@@ -35,7 +35,7 @@ def test_cloudinary_upload():
     print(f"\nCloudinary configured")
     print(f"   Cloud: {Config.CLOUDINARY_CLOUD_NAME}")
 
-    # Confirm
+    # confirm
     print("WARNING: This will upload ~1522 images to Cloudinary")
     print("   - Takes 30-60 minutes")
     print("   - Uses ~500MB-1GB of bandwidth")
@@ -45,7 +45,7 @@ def test_cloudinary_upload():
     try:
         response = input("\nContinue? (yes/no): ").strip().lower()
     except:
-        # Fallback if input fails
+        # fallback if input fails
         print("\nInput error. Please run again and type 'yes' or 'no'")
         return
 
@@ -53,20 +53,20 @@ def test_cloudinary_upload():
         print("\nUpload cancelled")
         return
 
-    # Create uploader
+    # create uploader
     uploader = CloudinaryUploader(
         cloud_name=Config.CLOUDINARY_CLOUD_NAME,
         api_key=Config.CLOUDINARY_API_KEY,
         api_secret=Config.CLOUDINARY_API_SECRET
     )
 
-    # Upload images
+    # upload images
     image_urls = uploader.upload_images(
         dataset_name=Config.DATASET_NAME,
         output_file='../data/image_urls.json'
     )
 
-    print("\nImages uploaded to Cloudinary!")
+    print("\nImages uploaded to Cloudinary")
     print(f"URLs saved to: image_urls.json")
     print(f"\nNext step: Update Qdrant with image URLs")
     print(f"   Run: python3 update_qdrant_images.py")
@@ -76,6 +76,6 @@ if __name__ == "__main__":
     try:
         test_cloudinary_upload()
     except Exception as e:
-        print(f"\nUPLOAD FAILED: {e}")
+        print(f"\nUpload failed: {e}")
         import traceback
         traceback.print_exc()
