@@ -1,4 +1,4 @@
-# UPDATE QDRANT WITH IMAGE URLS
+# Update Qdrant with image urls
 """
 Updates Qdrant records with Cloudinary image URLs.
 """
@@ -20,9 +20,9 @@ logger = logging.getLogger(__name__)
 def update_qdrant_with_images():
     """Update Qdrant records with image URLs from Cloudinary."""
 
-    print("UPDATE QDRANT WITH IMAGE URLS")
+    print("Update Qdrant records with image URLs")
 
-    # Load image URLs
+    # load image URLs
     print("\n Loading image URLs...")
     try:
         with open('../data/image_urls.json', 'r') as f:
@@ -33,7 +33,7 @@ def update_qdrant_with_images():
         print("   Run: python3 test_cloudinary_upload.py first")
         return
 
-    # Connect to Qdrant
+    # connect to Qdrant
     print("\n Connecting to Qdrant...")
     client = QdrantClient(
         url=Config.QDRANT_URL,
@@ -41,12 +41,12 @@ def update_qdrant_with_images():
     )
     print(" Connected to Qdrant")
 
-    # Get current collection info
+    # get current collection info
     collection_info = client.get_collection(Config.COLLECTION_NAME)
     print(f"   Collection: {Config.COLLECTION_NAME}")
     print(f"   Points: {collection_info.points_count}")
 
-    # Update records
+    # update records
     print("\n Updating records with image URLs...")
 
     updated = 0
@@ -54,7 +54,7 @@ def update_qdrant_with_images():
 
     for record_id, image_url in tqdm(image_urls.items(), desc="Updating"):
         try:
-            # Update payload with image_url
+            # update payload with image_url
             client.set_payload(
                 collection_name=Config.COLLECTION_NAME,
                 payload={"image_url": image_url},
@@ -66,12 +66,12 @@ def update_qdrant_with_images():
             logger.error(f"Failed to update {record_id}: {e}")
             failed += 1
 
-    print(f"\n UPDATE COMPLETE!")
+    print(f"\n Update cpmleted!")
     print(f"   Updated: {updated}")
     print(f"   Failed: {failed}")
     print(f"   Success rate: {updated/(updated+failed)*100:.1f}%")
 
-    # Verify with sample
+    # verify with sample
     print("\n Verifying update...")
     sample_id = list(image_urls.keys())[0]
 
@@ -89,7 +89,7 @@ def update_qdrant_with_images():
     else:
         print(f"  Verification failed - no image_url in payload")
 
-    print(" QDRANT DATABASE UPDATED WITH IMAGE URLS!")
+    print(" Qdrant base updated with images urls")
     print("\n Your database now has:")
     print("   - Text data")
     print("   - Embeddings (vectors)")
