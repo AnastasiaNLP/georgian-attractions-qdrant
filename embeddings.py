@@ -1,4 +1,4 @@
-# EMBEDDINGS GENERATOR
+# embeddings generator 
 """
 Creates embeddings for text data using SentenceTransformers.
 """
@@ -17,8 +17,7 @@ class EmbeddingsGenerator:
     """
     Generates embeddings for records using SentenceTransformers.
 
-    Attributes
-    ----------
+    Attributes:
     model_name : str
         SentenceTransformer model name
     device : str
@@ -30,15 +29,15 @@ class EmbeddingsGenerator:
         self.device = device if torch.cuda.is_available() else 'cpu'
 
         logger.info(f"Loading embedding model: {model_name}")
-        print(f" LOADING EMBEDDING MODEL")
+        print(f"Loading embedding model")
         print(f"Model: {model_name}")
         print(f"Device: {self.device}")
 
         self.model = SentenceTransformer(model_name, device=self.device)
 
-        # Test
+        # test
         test_vector = self.model.encode("Test")
-        print(f" Model loaded! Vector size: {len(test_vector)}")
+        print(f" Model loaded. Vector size: {len(test_vector)}")
 
     def create_combined_text(self, record: Dict[str, Any]) -> str:
         """Create combined text for embedding."""
@@ -69,27 +68,25 @@ class EmbeddingsGenerator:
         """
         Generate embeddings for all records.
 
-        Parameters
-        ----------
+        Parameters:
         records : List[Dict]
             Records to process
         batch_size : int
             Batch size for encoding
 
-        Returns
-        -------
+        Returns:
         pd.DataFrame
             DataFrame with embeddings
         """
         logger.info(f"Generating embeddings for {len(records)} records")
-        print(f"GENERATING EMBEDDINGS")
+        print(f"Generating embeddings")
 
-        # Create combined text
+        # create combined text
         print("Creating combined text...")
         for rec in records:
             rec['combined_text'] = self.create_combined_text(rec)
 
-        # Generate embeddings in batches
+        # generate embeddings in batches
         print(f"Encoding text (batch_size={batch_size})...")
         embeddings = []
 
