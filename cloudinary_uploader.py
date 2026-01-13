@@ -22,7 +22,7 @@ class CloudinaryUploader:
     def __init__(self, cloud_name: str, api_key: str, api_secret: str):
         self.cloud_name = cloud_name
 
-        # Configure Cloudinary
+        # configure Cloudinary
         cloudinary.config(
             cloud_name=cloud_name,
             api_key=api_key,
@@ -30,7 +30,7 @@ class CloudinaryUploader:
         )
 
         logger.info("Cloudinary configured")
-        print(f"  CLOUDINARY UPLOADER")
+        print(f"  Cloudinary uploader")
         print(f"   Cloud: {cloud_name}")
 
     def upload_images(self, dataset_name: str, output_file: str = 'image_urls.json'):
@@ -42,7 +42,6 @@ class CloudinaryUploader:
 
         print(f" Dataset loaded: {len(dataset)} records")
         print(f"\n Uploading images to Cloudinary...")
-        print(f"   (This may take 30-60 minutes for 1522 images)")
 
         image_urls = {}
         failed = []
@@ -55,17 +54,17 @@ class CloudinaryUploader:
                 continue
 
             try:
-                # Конвертируем PIL Image в байты
+                # converting a PIL Image to Bytes
                 if hasattr(image, 'save'):  # Это PIL Image
                     buffer = BytesIO()
                     image.save(buffer, format='JPEG')
                     buffer.seek(0)
                     upload_data = buffer
                 else:
-                    # Если это строка (Base64 или URL)
+                    # If it is a string (Base64 or URL)
                     upload_data = image
 
-                # Upload to Cloudinary
+                # upload to Cloudinary
                 result = cloudinary.uploader.upload(
                     upload_data,
                     public_id=f"georgian_attractions/{rec_id}",
@@ -73,10 +72,10 @@ class CloudinaryUploader:
                     resource_type="auto"
                 )
 
-                # Save URL
+                # save URL
                 image_urls[str(rec_id)] = result['secure_url']
 
-                # Progress
+                # progress
                 if (i + 1) % 50 == 0:
                     uploaded = len(image_urls)
                     print(f"\n   Progress: {uploaded} images uploaded")
@@ -86,16 +85,16 @@ class CloudinaryUploader:
                 logger.error(f"Failed to upload {rec_id}: {error_msg}")
                 failed.append((rec_id, error_msg))
 
-                # Показываем первые 5 ошибок
+                # show the first 5 errors
                 if len(failed) <= 5:
                     print(f"\n    Error for {rec_id}: {error_msg}")
 
-        # Save mapping
+        # save mapping
         print(f"\n Saving URL mapping to {output_file}...")
         with open(output_file, 'w') as f:
             json.dump(image_urls, f, indent=2)
 
-        print(f" UPLOAD COMPLETE!")
+        print(f" Upload complete!")
         print(f"   Total images: {len(dataset)}")
         print(f"   Uploaded: {len(image_urls)}")
         print(f"   Failed: {len(failed)}")
