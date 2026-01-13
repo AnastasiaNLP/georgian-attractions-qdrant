@@ -1,5 +1,5 @@
 
-# TEST: QDRANT UPLOAD
+# TEST: Qdarnt upload
 
 
 """
@@ -11,7 +11,7 @@ import pickle
 from config import Config
 from qdrant_uploader import QdrantUploader
 
-# Setup logging
+# setup logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
@@ -20,16 +20,16 @@ logging.basicConfig(
 def test_upload():
     """Upload data to Qdrant."""
 
-    print(" TEST: QDRANT UPLOAD")
+    print(" Test: Qdrant")
 
-    # Load processed data
+    # load processed data
     print("\n Loading processed data...")
     with open('../data/processed_data.pkl', 'rb') as f:
         df = pickle.load(f)
 
     print(f" Loaded {len(df)} records")
 
-    # Create uploader
+    # create uploader
     uploader = QdrantUploader(
         url=Config.QDRANT_URL,
         api_key=Config.QDRANT_API_KEY,
@@ -37,14 +37,14 @@ def test_upload():
         vector_size=Config.VECTOR_SIZE
     )
 
-    # Create collection
+    # create collection
     recreate = input("Recreate collection if exists? (yes/no): ")
     uploader.create_collection(recreate=(recreate.lower() == 'yes'))
 
-    # Upload data
+    # upload data
     uploader.upload_data(df, batch_size=100)
 
-    print(" QDRANT DATABASE CREATED SUCCESSFULLY!")
+    print(" Qdrant base created successfully!")
     print(f"\n Summary:")
     print(f"   Collection: {Config.COLLECTION_NAME}")
     print(f"   Records: {len(df)}")
@@ -57,6 +57,6 @@ if __name__ == "__main__":
     try:
         test_upload()
     except Exception as e:
-        print(f"\n❌ UPLOAD FAILED: {e}")
+        print(f"\nUPLOAD FAILED: {e}")
         import traceback
         traceback.print_exc()
