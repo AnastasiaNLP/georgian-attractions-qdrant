@@ -1,4 +1,4 @@
-# QDRANT UPLOADER
+# Qdrant uploader 
 
 """
 Uploads processed data to Qdrant Cloud.
@@ -18,8 +18,7 @@ class QdrantUploader:
     """
     Uploads data to Qdrant Cloud.
 
-    Attributes
-    ----------
+    Attributes:
     client : QdrantClient
         Qdrant client instance
     collection_name : str
@@ -33,7 +32,7 @@ class QdrantUploader:
         self.vector_size = vector_size
 
         logger.info(f"Connecting to Qdrant Cloud...")
-        print(f" CONNECTING TO QDRANT CLOUD")
+        print(f"Connecting to Qdrant Cloud")
 
         self.client = QdrantClient(url=url, api_key=api_key, timeout=60)
 
@@ -42,9 +41,9 @@ class QdrantUploader:
 
     def create_collection(self, recreate: bool = False):
         """Create or recreate collection."""
-        print(f" CREATING COLLECTION")
+        print(f"Create collection")
 
-        # Check if collection exists
+        # check if collection exists
         collections = self.client.get_collections()
         existing_names = [col.name for col in collections.collections]
 
@@ -57,7 +56,7 @@ class QdrantUploader:
                 print(f" Collection '{self.collection_name}' already exists!")
                 return
 
-        # Create collection
+        # create collection
         print(f" Creating collection '{self.collection_name}'...")
 
         self.client.create_collection(
@@ -68,9 +67,9 @@ class QdrantUploader:
             )
         )
 
-        print(f" Collection created!")
+        print(f" Collection created")
 
-        # Verify
+        # verify
         collection_info = self.client.get_collection(self.collection_name)
         print(f"\n Collection info:")
         print(f"   Name: {self.collection_name}")
@@ -80,16 +79,16 @@ class QdrantUploader:
 
     def upload_data(self, df: pd.DataFrame, batch_size: int = 100):
         """Upload data in batches."""
-        print(f" UPLOADING DATA TO QDRANT")
+        print(f" Uploading data to Qdrant")
 
         print(f"   Total records: {len(df)}")
         print(f"   Batch size: {batch_size}")
 
-        # Prepare points
+        # prepare points
         points = []
 
         for idx, row in tqdm(df.iterrows(), total=len(df), desc="Preparing points"):
-            # Prepare payload (metadata)
+            # prepare payload (metadata)
             payload = {
                 'id': str(row['id']),
                 'name': str(row['name']),
@@ -106,7 +105,7 @@ class QdrantUploader:
                 'combined_text': str(row['combined_text'])
             }
 
-            # Create point
+            # create point
             point = PointStruct(
                 id=idx,
                 vector=row['embedding'].tolist(),
@@ -115,7 +114,7 @@ class QdrantUploader:
 
             points.append(point)
 
-        # Upload in batches
+        # upload in batches
         print(f"\n Uploading in batches...")
 
         for i in tqdm(range(0, len(points), batch_size), desc="Uploading batches"):
@@ -125,15 +124,15 @@ class QdrantUploader:
                 points=batch
             )
 
-        print(f"\n Upload complete!")
+        print(f"\n Upload complete")
 
-        # Verify
+        # verify
         collection_info = self.client.get_collection(self.collection_name)
         print(f"\n Final collection stats:")
         print(f"   Points uploaded: {collection_info.points_count}")
         print(f"   Expected: {len(df)}")
 
         if collection_info.points_count == len(df):
-            print(f"   All points uploaded successfully!")
+            print(f"   All points uploaded successfully")
         else:
-            print(f"   Mismatch in point count!")
+            print(f"   Mismatch in point count")
