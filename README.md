@@ -6,7 +6,7 @@ A production-ready vector database for semantic search of 1,715 Georgian tourist
 [![Qdrant](https://img.shields.io/badge/Vector_DB-Qdrant-red.svg)](https://qdrant.tech/)
 [![Cloudinary](https://img.shields.io/badge/Images-Cloudinary-blue.svg)](https://cloudinary.com/)
 
-## ✨ What is this?
+## What is this?
 
 This project provides a **complete vector database** for Georgian tourist attractions, ready to be used in RAG (Retrieval-Augmented Generation) systems, chatbots, or search applications.
 
@@ -18,7 +18,7 @@ This project provides a **complete vector database** for Georgian tourist attrac
 - **Multilingual**: English and Russian
 - **Production Ready**: Fully tested and documented
 
-## 🎯 Use Cases
+## Use Cases
 
 This database is ready to use for:
 
@@ -28,7 +28,7 @@ This database is ready to use for:
 4. **Mobile Apps**: Backend for travel apps
 5. **Research**: Georgian tourism analytics
 
-## 🏗️ Architecture
+## Architecture
 ```
 HuggingFace Dataset (1,715 attractions)
     ↓
@@ -43,7 +43,7 @@ Cloudinary Image CDN (1,520 photos)
 Ready for Your Application!
 ```
 
-## 📊 Database Contents
+## Database Contents
 
 ### Statistics
 - **Total Records**: 1,715 attractions
@@ -72,7 +72,7 @@ Each record contains:
 - Historical Sites
 - And more...
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Installation
 ```bash
@@ -131,7 +131,7 @@ for result in results:
     print(result.score)                    # Relevance score
 ```
 
-## 📁 Project Structure
+## Project Structure
 ```
 georgian-attractions-vector-db/
 ├── README.md                    # This file
@@ -158,7 +158,7 @@ georgian-attractions-vector-db/
     └── USAGE.md
 ```
 
-## 🔧 Technical Details
+## Technical Details
 
 - **Vector DB**: Qdrant Cloud (free 1GB tier)
 - **Embeddings**: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
@@ -167,13 +167,13 @@ georgian-attractions-vector-db/
 - **Vector Size**: 384 dimensions
 - **Distance Metric**: Cosine similarity
 
-## 📚 Documentation
+## Documentation
 
 - [Setup Guide](docs/SETUP.md) - Detailed setup instructions
 - [Cloudinary Guide](docs/CLOUDINARY.md) - Image upload process
 - [Usage Examples](docs/USAGE.md) - How to query the database
 
-## 🎯 Roadmap
+## Roadmap
 
 Future additions:
 - [ ] Hybrid search (BM25 + vectors)
@@ -182,7 +182,7 @@ Future additions:
 - [ ] Additional language support
 - [ ] Data enrichment
 
-## 🤝 Contributing
+## Contributing
 
 PRs welcome! Especially for:
 - Additional data enrichment
@@ -190,18 +190,18 @@ PRs welcome! Especially for:
 - Documentation improvements
 - Bug fixes
 
-## 📄 License
+## License
 
 MIT License
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - **Dataset**: [AIAnastasia/georgian-attractions](https://huggingface.co/datasets/AIAnastasia/georgian-attractions)
 - **Vector DB**: [Qdrant](https://qdrant.tech/)
 - **Embeddings**: [sentence-transformers](https://www.sbert.net/)
 - **Images**: [Cloudinary](https://cloudinary.com/)
 
-## 📧 Contact
+## Contact
 
 - GitHub: [@AIAnastasia](https://github.com/AnastasiaNLP)
 - HuggingFace: [@AIAnastasia](https://huggingface.co/AIAnastasia)
