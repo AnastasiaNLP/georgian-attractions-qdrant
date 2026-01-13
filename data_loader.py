@@ -1,4 +1,4 @@
-# DATA LOADER 
+# data loader
 """
 Georgian Attractions Data Loader
 Loads the dataset from HuggingFace and normalizes fields.
@@ -30,8 +30,7 @@ class GeorgianAttractionsDataLoader:
     Loads and normalizes the georgian-attractions dataset.
     Images are NOT loaded into memory - only metadata.
 
-    Attributes
-    ----------
+    Attributes:
     dataset_name : str
         HuggingFace dataset name
     """
@@ -44,18 +43,16 @@ class GeorgianAttractionsDataLoader:
         """
         Load dataset and return normalized records WITHOUT images.
 
-        Parameters
-        ----------
+        Parameters:
         sample_size : int, optional
             Limit number of records for testing
 
-        Returns
-        -------
+        Returns: 
         List[Dict]
             Normalized records (text only, no images in memory)
         """
         logger.info(f"Loading dataset: {self.dataset_name}")
-        print(f" LOADING DATASET (TEXT ONLY - NO IMAGES)")
+        print(f" Loading the dataset (text only - no images))")
 
         # Load dataset
         dataset = load_dataset(self.dataset_name, split='train')
@@ -67,36 +64,36 @@ class GeorgianAttractionsDataLoader:
         print(f" Dataset loaded: {len(dataset)} records")
         print(f" Normalizing records (skipping images to save RAM)...")
 
-        # Normalize records
+        # normalize records
         records = []
         for i, rec in enumerate(tqdm(dataset, desc="Processing")):
             record = {
-                # Core fields
+                # core fields
                 'id': safe_str(rec.get('id', str(i))),
                 'name': safe_str(rec.get('name')),
                 'description': safe_str(rec.get('description')),
                 'location': safe_str(rec.get('location')),
                 'category': safe_str(rec.get('category')),
 
-                # Additional fields
+                # additional fields
                 'tags': rec.get('tags', []),
                 'language': safe_str(rec.get('language', 'en')).upper(),
 
-                # Image metadata (but NOT the image data itself!)
+                # image metadata (but NOT the image data itself!)
                 'photo_name': safe_str(rec.get('photo_name', '')),
                 'photo_author': safe_str(rec.get('photo_author', '')),
                 'license': safe_str(rec.get('license', '')),
 
-                # Image flags (will be updated with Cloudinary URLs later)
+                # image flags (will be updated with Cloudinary URLs later)
                 'has_processed_image': bool(rec.get('image')),
                 'image_url': None,
 
-                # For compatibility - explicitly NOT loading image
+                # for compatibility - explicitly NOT loading image
                 'image': None
             }
             records.append(record)
 
-        # Clean memory
+        # clean memory
         del dataset
         gc.collect()
 
